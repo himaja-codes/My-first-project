@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Expense Tracker</title>
+  <style>
+    body{font-family: Arial; text-align: center; background: #f2f2f2;}
+   .box{background: white; width: 400px; margin: 50px auto; padding: 20px; border-radius: 10px;}
+    input{width: 90%; padding: 10px; margin: 5px;}
+    button{padding: 10px 20px; background: green; color: white; border: none; cursor: pointer;}
+    li{list-style: none; text-align: left; background: #eee; margin: 5px; padding: 8px;}
+  </style>
+</head>
+<body>
+  <h1>Personal Expense Tracker</h1>
+  <div class="box">
+    <input type="text" id="name" placeholder="Expense Name (Ex: Lunch)">
+    <input type="number" id="amount" placeholder="Amount (Ex: 100)">
+    <button onclick="addExpense()">Add Expense</button>
+    <ul id="list"></ul>
+    <h2>Total: $ <span id="total">0</span></h2>
+  </div>
+<script>
+let total = 0;
+function addExpense(){
+  let name = document.getElementById('name').value;
+  let amount = parseInt(document.getElementById('amount').value);
+  if(name == "" || isNaN(amount)){ alert("Please enter valid details"); return; }
+  let li = document.createElement('li');
+  li.innerText = name + " - $" + amount;
+  document.getElementById('list').appendChild(li);
+  total += amount;
+  document.getElementById('total').innerText = total;
+  document.getElementById('name').value = "";
+  document.getElementById('amount').value = "";
+}
+</script>
+</body>
+</html>
