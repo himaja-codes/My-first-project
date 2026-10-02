@@ -1,14 +1,30 @@
-  <!DOCTYPE html>
+   <!DOCTYPE html>
 <html><head><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
 body{background:linear-gradient(135deg,#ff0080,#ff8aed,#7928ca);font-family:Arial;display:flex;justify-content:center;padding:20px;min-height:100vh;margin:0}
 .card{background:white;padding:25px;border-radius:15px;width:350px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
-h2{text-align:center;color:#ff0080}
+h2{text-align:center;color:#ff0080;margin-bottom:5px}
 input{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
 button{width:100%;padding:11px;background:#ff0080;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:8px;cursor:pointer}
-li{background:#ffe6f3;padding:8px 10px;margin:5px 0;border-radius:6px;list-style:none}
+li{background:#ffe6f3;padding:8px 10px;margin:5px 0;border-radius:6px;list-style:none;display:flex;justify-content:space-between;align-items:center}
 .total{background:linear-gradient(135deg,#ff0080,#7928ca);color:white;padding:12px;border-radius:8px;text-align:center;margin-top:15px;font-weight:bold}
 ul{padding:0}
+.del{background:#ff0040;width:auto;padding:4px 8px;margin:0;font-size:12px}
 </style></head>
-<body><div class="card"><h2>💖 Expense Tracker</h2><p style="text-align:center;font-size:12px;color:#888">Made by Himaja ✨</p><input id="name" placeholder="Ex: Lunch"><input id="amt" type="number" placeholder="Ex: 100"><button onclick="add()">Add Expense +</button><ul id="list"></ul><div class="total" id="total">Total: $0</div></div>
-<script>let t=0;function add(){let n=document.getElementById('name').value;let a=Number(document.getElementById('amt').value);if(!n||!a)return;t+=a;document.getElementById('list').innerHTML+=`<li>${n} - $${a}</li>`;document.getElementById('total').innerText='Total: $'+t;document.getElementById('name').value='';document.getElementById('amt').value='';}</script></body></html>
+<body><div class="card"><h2>💖 Expense Tracker</h2><p style="text-align:center;font-size:12px;color:#888">Made by Himaja ✨ Saves Automatically!</p><input id="name" placeholder="Ex: Lunch"><input id="amt" type="number" placeholder="Ex: 100"><button onclick="add()">Add Expense +</button><ul id="list"></ul><div class="total" id="total">Total: $0</div></div>
+<script>
+let expenses = JSON.parse(localStorage.getItem('himaja_expenses') || '[]');
+function render(){
+ let t=0; let html='';
+ expenses.forEach((e,i)=>{ t+=e.amt; html+=`<li>${e.name} - $${e.amt} <button class="del" onclick="del(${i})">X</button></li>` });
+ document.getElementById('list').innerHTML=html;
+ document.getElementById('total').innerText='Total: $'+t;
+}
+function add(){
+ let n=document.getElementById('name').value; let a=Number(document.getElementById('amt').value);
+ if(!n||!a) return; expenses.push({name:n, amt:a}); localStorage.setItem('himaja_expenses', JSON.stringify(expenses));
+ document.getElementById('name').value=''; document.getElementById('amt').value=''; render();
+}
+function del(i){ expenses.splice(i,1); localStorage.setItem('himaja_expenses', JSON.stringify(expenses)); render(); }
+render();
+</script></body></html>
