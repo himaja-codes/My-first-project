@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Expense Tracker</title>
-  <style>
-    body{font-family: Arial; text-align: center; background: #f2f2f2;}
-   .box{background: white; width: 400px; margin: 50px auto; padding: 20px; border-radius: 10px;}
-    input{width: 90%; padding: 10px; margin: 5px;}
-    button{padding: 10px 20px; background: green; color: white; border: none; cursor: pointer;}
-    li{list-style: none; text-align: left; background: #eee; margin: 5px; padding: 8px;}
-  </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Himaja's Expense Tracker</title>
+<style>
+body{background:linear-gradient(135deg,#667eea,#764ba2);font-family:Arial;display:flex;justify-content:center;padding:20px;min-height:100vh;margin:0}
+.card{background:white;padding:25px;border-radius:15px;width:350px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+h2{text-align:center;color:#333}
+input{width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+button{width:100%;padding:11px;background:#667eea;color:white;border:none;border-radius:8px;font-weight:bold;margin-top:8px;cursor:pointer}
+li{background:#f5f5ff;padding:8px 10px;margin:5px 0;border-radius:6px;list-style:none}
+.total{background:#667eea;color:white;padding:12px;border-radius:8px;text-align:center;margin-top:15px;font-weight:bold}
+ul{padding:0}
+</style>
 </head>
 <body>
-  <h1>Personal Expense Tracker</h1>
-  <div class="box">
-    <input type="text" id="name" placeholder="Expense Name (Ex: Lunch)">
-    <input type="number" id="amount" placeholder="Amount (Ex: 100)">
-    <button onclick="addExpense()">Add Expense</button>
-    <ul id="list"></ul>
-    <h2>Total: $ <span id="total">0</span></h2>
-  </div>
+<div class="card">
+<h2>💰 Expense Tracker</h2>
+<p style="text-align:center;color:#888;font-size:12px">Made by Himaja ✨</p>
+<input id="n" placeholder="Ex: Lunch">
+<input id="a" type="number" placeholder="Ex: 100">
+<button onclick="add()">Add Expense +</button>
+<ul id="list"></ul>
+<div class="total">Total: $<span id="t">0</span></div>
+</div>
 <script>
-let total = 0;
-function addExpense(){
-  let name = document.getElementById('name').value;
-  let amount = parseInt(document.getElementById('amount').value);
-  if(name == "" || isNaN(amount)){ alert("Please enter valid details"); return; }
-  let li = document.createElement('li');
-  li.innerText = name + " - $" + amount;
+let total=0;
+function add(){
+ let name=document.getElementById('n').value;
+ let amt=Number(document.getElementById('a').value);
+ if(name && amt){
+  let li=document.createElement('li');
+  li.textContent=name+" - $"+amt;
   document.getElementById('list').appendChild(li);
-  total += amount;
-  document.getElementById('total').innerText = total;
-  document.getElementById('name').value = "";
-  document.getElementById('amount').value = "";
+  total+=amt;
+  document.getElementById('t').textContent=total;
+  document.getElementById('n').value='';
+  document.getElementById('a').value='';
+ }
 }
 </script>
 </body>
